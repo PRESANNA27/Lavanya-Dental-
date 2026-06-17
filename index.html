@@ -41,7 +41,7 @@
   --r-xl: 36px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{font-family:'Inter',sans-serif;background:var(--pearl);color:var(--ink);overflow-x:hidden}
 .serif{font-family:'Playfair Display',serif}
 img{display:block;max-width:100%}
@@ -798,6 +798,81 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
   .modal-bd{padding:20px}
   .modal-hd{padding:22px}
 }
+
+/* ── MOBILE PERFORMANCE ── */
+/* will-change only on elements with continuous transform animations */
+.trust-track{will-change:transform}
+.carousel-track{will-change:transform}
+
+@media(max-width:768px){
+  /* 1. Disable animated background orb drift — most expensive GPU op */
+  .orb{animation:none !important;filter:blur(48px);opacity:0.16}
+
+  /* 2. Remove backdrop-filter (kills compositor layers) — replace with opaque fallbacks */
+  nav,.mob-nav{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(18,6,50,0.97) !important}
+  .hero-badge{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+  .hero-trust{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.09)}
+  .hero-main-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.11)}
+  .fc{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.11)}
+  .trust-marquee{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(12,6,42,0.97)}
+  .doc-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.08)}
+  .tf-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.07)}
+  .tech-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.07)}
+  .why-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.07)}
+  .rc{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.08)}
+  .bs-seg{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.10)}
+  .bs-pill{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(8,3,28,0.97)}
+  .g-rating-row{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.07)}
+  .appt-form{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(255,255,255,0.10)}
+  /* Keep glass dock blur but reduce it from 28px → 10px */
+  .fc-mobile-bar{backdrop-filter:blur(10px) !important;-webkit-backdrop-filter:blur(10px) !important}
+  /* Modal overlays — keep but reduce */
+  .overlay,#bmOverlay{backdrop-filter:blur(6px) !important;-webkit-backdrop-filter:blur(6px) !important}
+
+  /* 3. Disable non-essential continuous animations */
+  .fc{animation:none !important}
+  .hero-badge{animation:fadeUp 0.8s ease 0.2s both !important}
+  .avail-dot{animation:none !important}
+  .hero-vis{animation:none !important;opacity:1 !important;transform:none !important}
+  .hero-title,.hero-sub,.hero-acts{animation:fadeUp 0.6s ease both !important}
+
+  /* 4. Reduce box-shadow intensity */
+  .hero-main-card{box-shadow:0 6px 20px rgba(0,0,0,0.20) !important}
+  .bs-seg-indicator{box-shadow:0 2px 8px rgba(201,168,76,0.32) !important}
+  .fc-mobile-bar{box-shadow:0 6px 20px rgba(0,0,0,0.40) !important}
+  .doc-card:hover{box-shadow:0 12px 32px rgba(0,0,0,0.22) !important}
+  .why-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.22) !important}
+  .tf-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.25) !important}
+
+  /* 5. Remove glow filters on SVG icons */
+  .hero-badge-icon{filter:none !important}
+  .tm-icon{filter:none !important}
+  .tech-icon-svg{filter:none !important}
+  .tf-treatment-dot{box-shadow:none !important}
+  .tf-result-dot{box-shadow:none !important}
+  .tf-handle{box-shadow:0 0 6px rgba(201,168,76,0.35) !important}
+
+  /* 6. Simplify scroll-reveal — reduce travel distance & duration */
+  .rv{transform:translateY(18px);transition-duration:0.5s !important}
+  .rvl{transform:translateX(-18px);transition-duration:0.5s !important}
+  .rvr{transform:translateX(18px);transition-duration:0.5s !important}
+
+  /* 7. Disable hover-transform effects (no hover on touch anyway) */
+  .svc-card:hover{transform:none}
+  .svc-card:hover .svc-banner-deco{transform:none}
+  .doc-card:hover{transform:none}
+  .tip-card:hover{transform:none}
+  .btn-gold:hover,.btn-royal:hover{transform:none}
+}
+
+/* 8. prefers-reduced-motion — stop all decorative animations */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
+  .orb,.fc,.avail-dot,.score-fill,.trust-track,.carousel-track{animation:none !important}
+  .rv,.rvl,.rvr{opacity:1 !important;transform:none !important;transition:none !important}
+  .hero-badge,.hero-title,.hero-sub,.hero-acts,.hero-vis{animation:none !important;opacity:1 !important;transform:none !important}
+  .hero-trust{opacity:1 !important;transform:none !important}
+}
 </style>
 </head>
 <body>
@@ -919,7 +994,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
     </div>
     <div class="hero-vis">
       <div style="position:relative;display:inline-block">
-        <img src="ldc-logo.png" alt="" class="hero-logo-wm" aria-hidden="true">
+        <img src="ldc-logo.png" alt="" class="hero-logo-wm" aria-hidden="true" loading="lazy">
         <div class="hero-main-card">
           <div class="hmc-head">
             <div class="hmc-av" id="hmcAv" style="font-size:16px">KL</div>
@@ -1780,7 +1855,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
     <div class="ft-top">
       <div class="ft-brand">
         <div class="logo-footer-wrap">
-          <img src="ldc-logo.png" alt="Lavanya Dental Clinic" class="ldc-logo-img logo-footer-img">
+          <img src="ldc-logo.png" alt="Lavanya Dental Clinic" class="ldc-logo-img logo-footer-img" loading="lazy">
         </div>
         <div class="fb-logo" id="ftLogo" style="margin-bottom:6px">Lavanya Dental Clinic</div>
         <div class="fb-gold"></div>
@@ -1839,7 +1914,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
     <!-- Left Panel -->
     <div class="bml">
       <div class="bml-logo">
-        <div class="bml-pill"><img src="ldc-logo.png" alt="LDC"></div>
+        <div class="bml-pill"><img src="ldc-logo.png" alt="LDC" loading="lazy"></div>
         <div class="bml-brand">
           <div class="bml-name">Lavanya Dental</div>
           <div class="bml-tag">Excellence</div>
@@ -2002,12 +2077,16 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
 
 /* ── PARTICLES ── */
 (function(){
-  const c=document.getElementById('particles');
-  for(let i=0;i<25;i++){
-    const p=document.createElement('div');
+  var prefersRM=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(prefersRM)return;
+  var c=document.getElementById('particles');
+  var isMobile=window.innerWidth<768;
+  var count=isMobile?7:25;
+  for(var i=0;i<count;i++){
+    var p=document.createElement('div');
     p.className='particle';
-    const s=Math.random()*4+2;
-    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${3+Math.random()*4}s`;
+    var s=Math.random()*4+2;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;animation-delay:'+(Math.random()*4)+'s;animation-duration:'+(3+Math.random()*4)+'s';
     c.appendChild(p);
   }
 })();
@@ -2035,8 +2114,17 @@ document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
 
 /* ── STAT COUNT-UP ── */
 (function(){
+  var prefersRM=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function snapValue(el){
+    var target=parseInt(el.dataset.target,10);
+    var isDecimal=el.dataset.decimal==='1';
+    if(isDecimal)el.textContent=(target/10).toFixed(1);
+    else if(target>=1000)el.textContent=Math.floor(target/1000)+'K';
+    else el.textContent=target;
+  }
   function easeOut(t){return 1-Math.pow(1-t,3);}
   function countUp(el){
+    if(prefersRM){snapValue(el);return;}
     var target=parseInt(el.dataset.target,10);
     var isDecimal=el.dataset.decimal==='1';
     var duration=1800;
@@ -2112,6 +2200,8 @@ document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
 
 /* ── TECH SPOTLIGHT ── */
 (function(){
+  /* Skip entirely on touch/mobile — mousemove doesn't fire on touch */
+  if('ontouchstart' in window||window.innerWidth<768)return;
   var grid=document.getElementById('techGrid');
   if(!grid)return;
   grid.addEventListener('mousemove',function(e){
@@ -2140,6 +2230,7 @@ document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
   wrap.addEventListener('touchstart',function(e){
     startX=e.touches[0].clientX;
     isDragging=true;
+    track.dataset.touchPaused='1';
     track.style.animationPlayState='paused';
   },{passive:true});
   wrap.addEventListener('touchmove',function(e){
@@ -2150,9 +2241,33 @@ document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
   },{passive:true});
   wrap.addEventListener('touchend',function(){
     isDragging=false;
+    track.dataset.touchPaused='';
     track.style.transform='';
     track.style.animationPlayState='running';
   });
+})();
+
+/* ── MARQUEE PAUSE WHEN OFFSCREEN ── */
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  /* Trust marquee */
+  var trustTrack=document.querySelector('.trust-track');
+  var trustWrap=document.querySelector('.trust-marquee');
+  if(trustTrack&&trustWrap){
+    new IntersectionObserver(function(entries){
+      trustTrack.style.animationPlayState=entries[0].isIntersecting?'running':'paused';
+    },{threshold:0.01}).observe(trustWrap);
+  }
+  /* Review carousel */
+  var carTrack=document.getElementById('carouselTrack');
+  var carWrap=document.querySelector('.carousel-wrap');
+  if(carTrack&&carWrap){
+    new IntersectionObserver(function(entries){
+      if(!carTrack.dataset.touchPaused){
+        carTrack.style.animationPlayState=entries[0].isIntersecting?'running':'paused';
+      }
+    },{threshold:0.01}).observe(carWrap);
+  }
 })();
 
 /* ── FAQ ACCORDION ── */
