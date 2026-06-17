@@ -732,6 +732,10 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
 @keyframes fbPulse{0%,100%{box-shadow:0 8px 28px rgba(201,168,76,0.45)}50%{box-shadow:0 8px 36px rgba(201,168,76,0.65)}}
 #floatBook:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 40px rgba(201,168,76,0.55)}
 /* Responsive */
+@media(max-width:680px){
+  /* Hide old float-book button — glass dock handles this on mobile */
+  #floatBook{display:none !important}
+}
 @media(max-width:640px){
   #bmModal{flex-direction:column;max-height:96vh;border-radius:20px}
   .bml{width:100%;flex-direction:row;align-items:center;padding:14px 16px;gap:12px}
@@ -797,6 +801,22 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
   .doc-modal-banner{border-radius:var(--r-lg) var(--r-lg) 0 0;flex-direction:column;align-items:flex-start;height:auto;padding-bottom:24px}
   .modal-bd{padding:20px}
   .modal-hd{padding:22px}
+}
+
+/* ── MODAL / DOCK OVERLAP FIX ── */
+/* Hide floating dock whenever any modal overlay is open */
+body:has(.overlay.active) .fc-mobile-bar,
+body:has(.overlay.active) .fc-stack,
+body:has(#bmOverlay.bm-open) .fc-mobile-bar,
+body:has(#bmOverlay.bm-open) .fc-stack{display:none !important}
+/* Bottom padding so content above dock is never hidden */
+@media(max-width:768px){
+  .modal-bd{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)) !important}
+  .bmr{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)) !important}
+  .modal-cta{padding-bottom:8px}
+  /* Raise overlay above dock as secondary guard */
+  .overlay{z-index:9100}
+  #bmOverlay{z-index:9100}
 }
 
 /* ── MOBILE PERFORMANCE ── */
@@ -1211,7 +1231,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
           </div>
           <div class="branch-detail">
             <div class="bdi">🕐</div>
-            <div><div class="bdl">Working Hours</div><div class="bdv">Monday – Saturday, 9 AM – 7 PM</div></div>
+            <div><div class="bdl">Working Hours</div><div class="bdv">Mon–Sat: Morning 10 AM–1 PM &nbsp;·&nbsp; Evening 5–9 PM</div></div>
           </div>
           <div class="branch-doc-badge" onclick="openDoc('lavanya')" style="cursor:pointer">👩‍⚕️ Dr. K. Lavanya — Lead Surgeon →</div>
         </div>
@@ -1235,7 +1255,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
           </div>
           <div class="branch-detail">
             <div class="bdi">🕐</div>
-            <div><div class="bdl">Working Hours</div><div class="bdv">Monday – Saturday, 9 AM – 7 PM</div></div>
+            <div><div class="bdl">Working Hours</div><div class="bdv">Mon–Sat: Morning 10 AM–1 PM &nbsp;·&nbsp; Evening 5–9 PM</div></div>
           </div>
           <div class="branch-doc-badge" onclick="openDoc('sankar')" style="cursor:pointer;background:linear-gradient(135deg,#e0ecf8,#cce4f5);border-color:rgba(30,106,154,0.2);color:#1e6a9a">👨‍⚕️ Dr. R. Sankar — Lead Surgeon →</div>
         </div>
@@ -1751,7 +1771,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
           <div class="branch-name">Lavanya Dental Clinic</div>
           <div class="branch-doc-tag"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Dr. K. Lavanya &amp; Dr. R. Sankar</div>
           <div class="branch-address">No.91, Thomas Arul Street<br>Opp. to MOH Petrol Bunk<br>Karaikal – 609602</div>
-          <div class="branch-hours"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.01 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg><span><strong>Mon–Sat:</strong> 9:00 AM – 8:00 PM &nbsp;|&nbsp; <strong>Sun:</strong> 9:00 AM – 1:00 PM</span></div>
+          <div class="branch-hours"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.01 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg><span><strong>Mon–Sat:</strong> Morning 10:00 AM–1:00 PM &nbsp;|&nbsp; Evening 5:00–9:00 PM</span></div>
           <div class="branch-actions">
             <a href="https://wa.me/919842922624?text=Hello%2C%20I%20would%20like%20to%20book%20an%20appointment%20at%20your%20Karaikal%20branch." class="branch-btn branch-btn-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
             <a href="tel:+919842922624" class="branch-btn branch-btn-call"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>98429 22624</a>
@@ -1774,7 +1794,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
           <div class="branch-name">Kamala Dental Clinic</div>
           <div class="branch-doc-tag" style="color:#1e6a9a;background:rgba(30,106,154,0.07);border-color:rgba(30,106,154,0.18)"><svg viewBox="0 0 24 24" style="fill:#1e6a9a"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Dr. R. Sankar</div>
           <div class="branch-address">Shop No.5, Senthil Complex<br>Thottam Kizha Veedhi<br>Poraiyar – 609307</div>
-          <div class="branch-hours"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.01 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg><span><strong>Mon–Sat:</strong> 9:00 AM – 7:00 PM &nbsp;|&nbsp; <strong>Sun:</strong> Closed</span></div>
+          <div class="branch-hours"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.01 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg><span><strong>Mon–Sat:</strong> Morning 10:00 AM–1:00 PM &nbsp;|&nbsp; Evening 5:00–9:00 PM</span></div>
           <div class="branch-actions">
             <a href="https://wa.me/919842922624?text=Hello%2C%20I%20would%20like%20to%20book%20an%20appointment%20at%20your%20Poraiyar%20branch." class="branch-btn branch-btn-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
             <a href="tel:+919842922624" class="branch-btn branch-btn-call"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>98429 22624</a>
@@ -1799,7 +1819,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
       <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Are your treatments painful?</span><span class="faq-tog">+</span></div><div class="faq-a">We use advanced local anaesthesia and gentle techniques to ensure all our procedures are as comfortable as possible. Most patients are surprised by how pain-free modern dentistry is.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Do you accept dental insurance?</span><span class="faq-tog">+</span></div><div class="faq-a">We work with several dental insurance providers and help you maximise your benefits. Please call us with your insurance details and we will confirm coverage before your appointment.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How long does a routine checkup take?</span><span class="faq-tog">+</span></div><div class="faq-a">A routine checkup including examination and professional cleaning usually takes 45 minutes to an hour. We will let you know if anything additional is needed after the exam.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What are your clinic hours?</span><span class="faq-tog">+</span></div><div class="faq-a">We are open Monday to Saturday, 9 AM to 7 PM. We also offer early morning slots on select days — call us to check availability for your preferred time.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What are your clinic hours?</span><span class="faq-tog">+</span></div><div class="faq-a">We are open Monday to Saturday: Morning 10:00 AM – 1:00 PM and Evening 5:00 PM – 9:00 PM. Call us or WhatsApp to check slot availability for your preferred time.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Can I get Invisalign as an adult?</span><span class="faq-tog">+</span></div><div class="faq-a">Absolutely. Invisalign is highly effective for adults and a growing number of our patients choose it for its discreet appearance. We offer free Invisalign consultations.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I know if I need a root canal?</span><span class="faq-tog">+</span></div><div class="faq-a">Common signs include severe toothache, sensitivity to hot and cold that lingers, swelling near the tooth, or tooth discolouration. Come in for an examination and we will diagnose accurately.</div></div>
     </div>
@@ -1818,7 +1838,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
           <div class="ci"><div class="ci-ico">📞</div><div><div class="ci-lbl">Phone / WhatsApp</div><div class="ci-val">+91 98429 22624 &nbsp;|&nbsp; +91 98429 22824</div></div></div>
           <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Branch 1 — Karaikal</div><div class="ci-val">No.91, Thomas Arul Street, Opp to MOH Petrol Bunk, Karaikal – 609602</div></div></div>
           <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Branch 2 — Poraiyar</div><div class="ci-val">Shop No.5, Senthil Complex, Thottam Kizha Veedhi, Poraiyar – 609307</div></div></div>
-          <div class="ci"><div class="ci-ico">🕐</div><div><div class="ci-lbl">Working Hours</div><div class="ci-val">Monday – Saturday, 9 AM – 7 PM</div></div></div>
+          <div class="ci"><div class="ci-ico">🕐</div><div><div class="ci-lbl">Working Hours</div><div class="ci-val">Mon–Sat · Morning 10 AM–1 PM &nbsp;|&nbsp; Evening 5–9 PM</div></div></div>
         </div>
       </div>
       <div class="appt-form rvr">
@@ -2308,7 +2328,7 @@ function openSvc(id){
     <div class="ms-title"><div class="ms-ico">📊</div>Before &amp; After</div>
     <div class="ba"><div class="ba-c b"><div class="ba-e">${s.before.e}</div><div class="ba-l">Before</div><div class="ba-t">${s.before.d}</div></div><div class="ba-c a"><div class="ba-e">${s.after.e}</div><div class="ba-l">After</div><div class="ba-t">${s.after.d}</div></div></div>
     <div class="ms-title"><div class="ms-ico">❓</div>FAQs</div><div class="faqs">${fq}</div>
-    <div class="modal-cta"><a href="#appointment" class="btn btn-royal" onclick="closeSvc()">📅 Book This Treatment →</a></div>`;
+    <div class="modal-cta"><button class="btn btn-royal" onclick="closeSvc();openBooking('${s.title}')">📅 Book This Treatment →</button></div>`;
   document.getElementById('svcOverlay').classList.add('active');
   document.body.style.overflow='hidden';
 }
@@ -2520,11 +2540,25 @@ function bmReset(){
   document.getElementById('bmSuccess').classList.remove('show');
 }
 
-function openBooking(){
+function openBooking(servicePreset){
   bmReset();
   // Pre-select active branch from switcher
   var branchSel=document.getElementById('bm-branch');
   if(branchSel&&window.LDC_BRANCH){branchSel.value=window.LDC_BRANCH;bmBranchChange();}
+  // Pre-select service if called from a service page
+  if(servicePreset){
+    var svcSel=document.getElementById('bm-service');
+    if(svcSel){
+      for(var i=0;i<svcSel.options.length;i++){
+        if(svcSel.options[i].text.trim()===servicePreset.trim()||
+           svcSel.options[i].text.toLowerCase().indexOf(servicePreset.toLowerCase())>-1){
+          svcSel.selectedIndex=i;
+          svcSel.classList.add('bok');
+          break;
+        }
+      }
+    }
+  }
   document.getElementById('bmOverlay').classList.add('bm-open');
   document.body.style.overflow='hidden';
 }
