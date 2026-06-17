@@ -351,38 +351,30 @@ h2.sec-h.light em{color:var(--gold-light)}
 .tip-card p{font-size:12.5px;line-height:1.75;color:var(--muted)}
 .tip-badge{display:inline-block;margin-top:12px;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.10);border:1px solid rgba(201,168,76,0.22);border-radius:50px;padding:3px 11px}
 
-/* ── BRANCH SWITCHER ── */
-.bs-bar{background:rgba(8,3,28,0.93);border-bottom:1px solid rgba(201,168,76,0.16);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:68px;z-index:900;padding:8px 0}
-.bs-inner{max-width:1200px;margin:0 auto;padding:0 5%;display:flex;align-items:center;gap:8px}
-.bs-label{font-size:11px;color:rgba(255,255,255,0.30);font-weight:500;letter-spacing:0.6px;margin-right:4px;white-space:nowrap}
-.bs-btn{display:flex;align-items:center;gap:8px;padding:7px 18px;border-radius:50px;border:1px solid rgba(201,168,76,0.18);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.48);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.32s cubic-bezier(.23,1,.32,1);letter-spacing:0.3px;font-family:inherit;position:relative;overflow:hidden}
-.bs-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.08),transparent);opacity:0;transition:opacity 0.3s}
-.bs-btn:hover{border-color:rgba(201,168,76,0.40);color:rgba(255,255,255,0.78)}
-.bs-btn:hover::before{opacity:1}
-.bs-btn.bs-active{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--royal);border-color:transparent;box-shadow:0 4px 18px rgba(201,168,76,0.38),0 0 0 1px rgba(201,168,76,0.20)}
-.bs-btn.bs-active::before{opacity:0}
-.bs-icon{width:14px;height:14px;fill:currentColor;flex-shrink:0;transition:transform 0.3s}
-.bs-btn.bs-active .bs-icon{fill:var(--royal)}
-.bs-btn:hover .bs-icon{transform:scale(1.15)}
-.bs-btn-text{display:flex;flex-direction:column;align-items:flex-start;gap:0}
-.bs-btn-name{font-size:12px;font-weight:700;line-height:1.1}
-.bs-btn-badge{font-size:9px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;opacity:0.6;line-height:1}
-.bs-btn.bs-active .bs-btn-badge{opacity:0.65;color:var(--royal)}
-.bs-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.bs-dot-k{background:var(--gold)}.bs-dot-p{background:#4a9dc8}
-.bs-active .bs-dot{background:var(--royal)}
-/* Mobile branch switcher — card style */
+/* ── BRANCH SWITCHER (Premium Segmented Control) ── */
+.bs-seg{display:inline-flex;position:relative;padding:3px;border-radius:50px;background:rgba(255,255,255,0.06);border:1px solid rgba(201,168,76,0.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);margin-bottom:24px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 20px rgba(0,0,0,0.22)}
+.bs-seg-indicator{position:absolute;top:3px;bottom:3px;left:3px;border-radius:50px;background:linear-gradient(135deg,var(--gold),var(--gold-light));box-shadow:0 3px 16px rgba(201,168,76,0.45),0 0 0 1px rgba(201,168,76,0.22),0 0 30px rgba(201,168,76,0.15);transition:left 0.38s cubic-bezier(.23,1,.32,1),width 0.38s cubic-bezier(.23,1,.32,1);pointer-events:none;z-index:0}
+.bs-seg-btn{position:relative;z-index:1;display:flex;align-items:center;gap:8px;padding:9px 20px;border-radius:50px;border:none;background:transparent;color:rgba(255,255,255,0.48);font-size:12px;font-weight:600;cursor:pointer;transition:color 0.28s ease;font-family:inherit;letter-spacing:0.3px;white-space:nowrap;overflow:hidden}
+.bs-seg-btn.bs-active{color:var(--royal)}
+.bs-seg-btn:hover:not(.bs-active){color:rgba(255,255,255,0.82)}
+.bs-seg-icon{width:13px;height:13px;fill:currentColor;flex-shrink:0}
+.bs-seg-btn-text{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.bs-seg-btn-name{font-size:12px;font-weight:700;line-height:1.1}
+.bs-seg-btn-badge{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;opacity:0.68;line-height:1}
+.bs-seg-btn.bs-active .bs-seg-btn-badge{opacity:0.60}
+.bs-seg-ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.28);transform:scale(0);animation:bsRippleAnim 0.55s ease-out forwards;pointer-events:none}
+@keyframes bsRippleAnim{to{transform:scale(3.5);opacity:0}}
 @media(max-width:680px){
-  .bs-bar{top:56px;padding:10px 0}
-  .bs-inner{padding:0 14px;gap:10px}
-  .bs-label{display:none}
-  .bs-btn{flex:1;justify-content:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,0.04);border-width:1px;text-align:left}
-  .bs-btn.bs-active{border-radius:16px;box-shadow:0 4px 20px rgba(201,168,76,0.40),0 0 0 1px rgba(201,168,76,0.22)}
-  .bs-btn-name{font-size:13px}
-  .bs-btn-badge{font-size:9px;opacity:0.55}
-  .bs-btn.bs-active .bs-btn-badge{opacity:0.70}
-  .bs-icon{width:16px;height:16px}
+  .bs-seg{align-self:stretch;justify-content:stretch}
+  .bs-seg-btn{flex:1;justify-content:center;padding:10px 12px}
+  .bs-seg-btn-name{font-size:13px}
 }
+/* Branch mini-pill (visible when hero scrolls away) */
+.bs-pill{position:fixed;top:14px;right:132px;z-index:1100;display:inline-flex;align-items:center;gap:6px;padding:5px 13px 5px 9px;border-radius:50px;background:rgba(8,3,28,0.90);border:1px solid rgba(201,168,76,0.32);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:11px;font-weight:600;color:var(--gold-light);cursor:pointer;opacity:0;transform:translateY(-4px);transition:opacity 0.3s ease,transform 0.3s ease;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,0.35),0 0 0 1px rgba(201,168,76,0.08);letter-spacing:0.3px;white-space:nowrap}
+.bs-pill.bs-pill-visible{opacity:1;transform:translateY(0);pointer-events:all}
+.bs-pill:hover{background:rgba(12,5,38,0.95);border-color:rgba(201,168,76,0.50)}
+.bs-pill svg{width:12px;height:12px;fill:var(--gold);flex-shrink:0}
+@media(max-width:680px){.bs-pill{top:auto;bottom:calc(88px + env(safe-area-inset-bottom,0px));right:14px;font-size:10px;padding:5px 11px 5px 8px}}
 /* Branch transition overlay */
 #branchOverlay{position:fixed;inset:0;z-index:8998;pointer-events:none;opacity:0;background:rgba(6,2,24,0.72);transition:opacity 0.36s ease;overflow:hidden}
 #branchOverlay.bsov-active{opacity:1;pointer-events:all}
@@ -848,26 +840,6 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
   </ul>
   <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
 </nav>
-<!-- BRANCH SWITCHER BAR -->
-<div class="bs-bar" id="bsBar" role="navigation" aria-label="Branch selector">
-  <div class="bs-inner">
-    <span class="bs-label">Select Location:</span>
-    <button class="bs-btn bs-active" data-branch="karaikal" onclick="switchBranch('karaikal')" aria-pressed="true">
-      <svg class="bs-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-      <div class="bs-btn-text">
-        <span class="bs-btn-name">Karaikal</span>
-        <span class="bs-btn-badge">Main Branch</span>
-      </div>
-    </button>
-    <button class="bs-btn" data-branch="poraiyar" onclick="switchBranch('poraiyar')" aria-pressed="false">
-      <svg class="bs-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-      <div class="bs-btn-text">
-        <span class="bs-btn-name">Poraiyar</span>
-        <span class="bs-btn-badge">Satellite Branch</span>
-      </div>
-    </button>
-  </div>
-</div>
 <div class="mob-nav" id="mobNav">
   <div class="mob-logo-bar">
     <div class="logo-wrap-dark" style="padding:3px 5px;border-radius:8px">
@@ -896,8 +868,26 @@ footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 5% 28px}
         <svg class="hero-badge-icon" viewBox="0 0 24 24"><path d="M12 2C9.79 2 8 3.79 8 6c0 1.09.44 2.08 1.15 2.79L7.5 14H5l-1.5 5h17L19 14h-2.5l-1.65-5.21C15.56 8.08 16 7.09 16 6c0-2.21-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-1.35 6.5h2.7L14.6 14H9.4l1.25-3.5z"/></svg>
         <span>Your Smile Deserves Expert Care</span>
       </div>
+      <!-- PREMIUM BRANCH SWITCHER — segmented control -->
+      <div class="bs-seg" id="bsSeg" role="navigation" aria-label="Branch selector">
+        <span class="bs-seg-indicator" id="bsIndicator"></span>
+        <button class="bs-seg-btn bs-active" data-branch="karaikal" aria-pressed="true">
+          <svg class="bs-seg-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <div class="bs-seg-btn-text">
+            <span class="bs-seg-btn-name">Karaikal</span>
+            <span class="bs-seg-btn-badge">Main Branch</span>
+          </div>
+        </button>
+        <button class="bs-seg-btn" data-branch="poraiyar" aria-pressed="false">
+          <svg class="bs-seg-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <div class="bs-seg-btn-text">
+            <span class="bs-seg-btn-name">Poraiyar</span>
+            <span class="bs-seg-btn-badge">Satellite Branch</span>
+          </div>
+        </button>
+      </div>
       <h1 class="hero-title serif">Your <em>Smile</em>,<br>Our <span class="vl">Royal</span> Craft</h1>
-      <p class="hero-sub">At Lavanya Dental Clinic, we blend artistry with advanced dental science — from routine care to complex reconstructive surgery, with compassion and precision at every step.</p>
+      <p class="hero-sub" id="heroSub">Lavanya Dental Clinic — Premium Dental Care in Karaikal. We blend artistry with advanced dental science, from routine care to complex reconstructive surgery.</p>
       <div class="hero-acts">
         <a href="#" class="btn btn-gold" onclick="openBooking();return false;">📅 Book Appointment</a>
         <a href="#services" class="btn btn-outline-white">Explore Services →</a>
@@ -2458,17 +2448,30 @@ function bmOverlayClick(e){if(e.target.id==='bmOverlay')closeBooking();}
       name:'Lavanya Dental Clinic',tag:'Royal Dental Excellence',
       doc:'Dr. K. Lavanya, BDS',role:'Lead Dental Surgeon — Karaikal',
       init:'KL',avBg:'linear-gradient(135deg,#c9a84c,#e8cc80)',avCol:'#1a0a4a',
-      waMsg:'Hello%2C%20I%20would%20like%20to%20book%20a%20dental%20appointment%20at%20Lavanya%20Dental%20Clinic%2C%20Karaikal.'
+      waMsg:'Hello%2C%20I%20would%20like%20to%20book%20a%20dental%20appointment%20at%20Lavanya%20Dental%20Clinic%2C%20Karaikal.',
+      heroSub:'Lavanya Dental Clinic — Premium Dental Care in Karaikal. We blend artistry with advanced dental science, from routine care to complex reconstructive surgery.'
     },
     poraiyar:{
       name:'Kamala Dental Clinic',tag:'Trusted Dental Care · Poraiyar',
       doc:'Dr. R. Sankar, BDS',role:'Lead Dental Surgeon — Poraiyar',
       init:'RS',avBg:'linear-gradient(135deg,#1e6a9a,#4a9dc8)',avCol:'#fff',
-      waMsg:'Hello%2C%20I%20would%20like%20to%20book%20a%20dental%20appointment%20at%20Kamala%20Dental%20Clinic%2C%20Poraiyar.'
+      waMsg:'Hello%2C%20I%20would%20like%20to%20book%20a%20dental%20appointment%20at%20Kamala%20Dental%20Clinic%2C%20Poraiyar.',
+      heroSub:'Kamala Dental Clinic — Trusted Dental Care in Poraiyar. Expert dental treatments delivered with warmth and clinical precision at our Poraiyar branch.'
     }
   };
 
   window.LDC_BRANCH='karaikal';
+
+  // Segmented control indicator — slide the gold thumb to the active button
+  function updateSegIndicator(){
+    var seg=document.getElementById('bsSeg');
+    var ind=document.getElementById('bsIndicator');
+    if(!seg||!ind)return;
+    var active=seg.querySelector('.bs-seg-btn.bs-active');
+    if(!active)return;
+    ind.style.left=active.offsetLeft+'px';
+    ind.style.width=active.offsetWidth+'px';
+  }
 
   function applyBranch(branch){
     var d=BD[branch];if(!d)return;
@@ -2480,6 +2483,8 @@ function bmOverlayClick(e){if(e.target.id==='bmOverlay')closeBooking();}
     var av=document.getElementById('hmcAv'),nm=document.getElementById('hmcName'),rl=document.getElementById('hmcRole');
     if(av){av.textContent=d.init;av.style.background=d.avBg;av.style.color=d.avCol;}
     if(nm)nm.textContent=d.doc;if(rl)rl.textContent=d.role;
+    // Hero subtitle
+    var hs=document.getElementById('heroSub');if(hs)hs.textContent=d.heroSub;
     // Footer clinic name
     var ft=document.getElementById('ftLogo');if(ft)ft.textContent=d.name;
     // WhatsApp links
@@ -2491,12 +2496,16 @@ function bmOverlayClick(e){if(e.target.id==='bmOverlay')closeBooking();}
     if(ac)ac.classList.add('branch-card-active');
     // Body attribute (drives CSS doctor visibility)
     document.body.setAttribute('data-branch',branch);
-    // Toggle buttons
-    document.querySelectorAll('.bs-btn').forEach(function(btn){
+    // Update mini-pill badge text
+    var pp=document.getElementById('bsPillText');
+    if(pp)pp.textContent=(branch==='karaikal'?'Karaikal':'Poraiyar');
+    // Toggle segmented buttons + slide indicator
+    document.querySelectorAll('.bs-seg-btn').forEach(function(btn){
       var active=btn.dataset.branch===branch;
       btn.classList.toggle('bs-active',active);
       btn.setAttribute('aria-pressed',active?'true':'false');
     });
+    updateSegIndicator();
   }
 
   window.switchBranch=function(branch){
@@ -2510,10 +2519,45 @@ function bmOverlayClick(e){if(e.target.id==='bmOverlay')closeBooking();}
     try{localStorage.setItem('ldc_branch',branch);}catch(e){}
   };
 
+  // Wire up segmented buttons with click + ripple
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.bs-seg-btn').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        // Ripple
+        var r=document.createElement('span');
+        r.className='bs-seg-ripple';
+        var sz=Math.max(btn.offsetWidth,btn.offsetHeight);
+        var rect=btn.getBoundingClientRect();
+        r.style.width=r.style.height=sz+'px';
+        r.style.left=(e.clientX-rect.left-sz/2)+'px';
+        r.style.top=(e.clientY-rect.top-sz/2)+'px';
+        btn.appendChild(r);
+        setTimeout(function(){r.remove();},600);
+        // Switch
+        switchBranch(btn.dataset.branch);
+      });
+    });
+    // Initial indicator position (after layout)
+    requestAnimationFrame(updateSegIndicator);
+  });
+
   // Restore from localStorage on load
   var saved='karaikal';
   try{var s=localStorage.getItem('ldc_branch');if(s&&BD[s])saved=s;}catch(e){}
   applyBranch(saved);
+})();
+
+/* ── BRANCH MINI-PILL OBSERVER ── */
+(function(){
+  var hero=document.getElementById('home');
+  var pill=document.getElementById('bsPill');
+  if(!hero||!pill)return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      pill.classList.toggle('bs-pill-visible',!e.isIntersecting);
+    });
+  },{threshold:0.08});
+  obs.observe(hero);
 })();
 
 /* ── FLOATING CONTACT JS ── */
@@ -2528,6 +2572,12 @@ function bmOverlayClick(e){if(e.target.id==='bmOverlay')closeBooking();}
 
 <!-- BRANCH TRANSITION OVERLAY -->
 <div id="branchOverlay" aria-hidden="true"></div>
+
+<!-- BRANCH MINI-PILL (shows when hero scrolls out of view) -->
+<div id="bsPill" class="bs-pill" role="button" tabindex="0" aria-label="Active branch — click to switch" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+  <span id="bsPillText">Karaikal</span>
+</div>
 
 <!-- FLOATING CONTACT STACK (desktop) -->
 <div class="fc-stack" id="fcStack">
